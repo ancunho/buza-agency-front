@@ -95,25 +95,27 @@ const login = () => {
 		email: email.value,
 		password: password.value
 	}
-	if (isEmpty(email.value)) {
+	if (isEmpty(params.email)) {
 		toastStore.showToast('warn', t('toast.email.empty'), 2000);
 		return;
 	}
-	if (isEmpty(password.value)) {
+	if (isEmpty(params.password)) {
 		toastStore.showToast('warn', t('toast.password.empty'), 2000);
 		return;
 	}
 
 	loginByEmail(params)
 		.then(res => {
-			if (res.data.accessToken) {
+			if (res.code === 0) {
 				authStore.setLoginState(res.data.accessToken);
-
-				toastStore.showToast('success', t('toast.success.login'), 3000, () => {
+				
+				toastStore.showToast('success', t('toast.success.login'), 1500, () => {
 					window.location.href = '/';
 				});
 			} else {
-				toastStore.showToast('error', res.data.msg, 2000);
+				toastStore.showToast('error', res.msg, 2000);
+				email.value = '';
+				password.value = '';
 			}
 		});
 	

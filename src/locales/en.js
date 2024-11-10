@@ -3,7 +3,8 @@ export default {
         success: {
             addToCart: 'Added to cart',
             login: 'Logged in successfully',
-            save: 'Saved successfully'
+            save: 'Saved successfully',
+            logout: 'Logged out successfully'
         },
         error: {
             login: 'Login failed',
@@ -21,7 +22,7 @@ export default {
         },
         password: {
             empty: 'Please enter your password'
-        }
+        },
     },
     login: {
         title: 'Sign in to your account',
@@ -39,6 +40,8 @@ export default {
         createAccount: 'Create an account',
         signIn: 'Sign in',
         currency: 'Currency',
-        freeDelivery: 'orders over'
+        freeDelivery: 'orders over',
+        myPage: 'My Page',
+        logout: 'Logout'
     }
 } 

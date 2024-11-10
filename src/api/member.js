@@ -10,7 +10,19 @@ export const loginByEmail = async (params) => {
         },
         data: params
     });
-    return response;
+    return response.data;
+}
+
+export const logout = async () => {
+    const response = await request({
+        url: '/member/auth/logout',
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'tenant-id': '1',
+        },
+    });
+    return response.data;
 }
 
 export const getMemberInfo = async () => {

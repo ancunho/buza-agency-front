@@ -3,7 +3,8 @@ export default {
         success: {
             addToCart: '已添加到购物车',
             login: '登录成功',
-            save: '保存成功'
+            save: '保存成功',
+            logout: '登出成功'
         },
         error: {
             login: '登录失败',
@@ -39,6 +40,8 @@ export default {
         createAccount: '创建账户',
         signIn: '登录',
         currency: '货币',
-        freeDelivery: '超过'
+        freeDelivery: '超过',
+        myPage: '我的页面',
+        logout: '登出'
     }
 } 

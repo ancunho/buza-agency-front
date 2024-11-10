@@ -3,7 +3,8 @@ export default {
         success: {
             addToCart: '장바구니에 추가되었습니다.',
             login: '로그인되었습니다.',
-            save: '저장되었습니다.'
+            save: '저장되었습니다.',
+            logout: '로그아웃 되었습니다.'
         },
         error: {
             login: '로그인에 실패했습니다.',
@@ -39,6 +40,8 @@ export default {
         createAccount: '회원가입',
         signIn: '로그인',
         currency: '화폐',
-        freeDelivery: '초과 주문'
+        freeDelivery: '초과 주문',
+        myPage: '마이페이지',
+        logout: '로그아웃'
     }
 } 
