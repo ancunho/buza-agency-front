@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 z-50">
+    <div class="fixed top-1/4 left-1/2 transform -translate-x-1/2 z-50">
         <TransitionGroup name="toast">
             <div v-for="toast in toasts" :key="toast.id"
                 class="mb-2 px-6 py-3 rounded-lg shadow-lg text-sm font-medium backdrop-blur-sm text-center min-w-[200px]"
