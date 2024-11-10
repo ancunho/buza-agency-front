@@ -1,4 +1,9 @@
 export default {
+    common: {
+        confirm: '确认',
+        cancel: '取消',
+        error: '发生错误'
+    },
     toast: {
         success: {
             addToCart: '已添加到购物车',
@@ -42,6 +47,7 @@ export default {
         currency: '货币',
         freeDelivery: '超过',
         myPage: '我的页面',
-        logout: '登出'
+        logout: '登出',
+        logoutConfirm: '确定要登出吗？'
     }
 } 

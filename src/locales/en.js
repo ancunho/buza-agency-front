@@ -1,4 +1,9 @@
 export default {
+    common: {
+        confirm: 'Confirm',
+        cancel: 'Cancel',
+        error: 'An error occurred'
+    },
     toast: {
         success: {
             addToCart: 'Added to cart',
@@ -42,6 +47,7 @@ export default {
         currency: 'Currency',
         freeDelivery: 'orders over',
         myPage: 'My Page',
-        logout: 'Logout'
+        logout: 'Logout',
+        logoutConfirm: 'Are you sure you want to logout?'
     }
 } 

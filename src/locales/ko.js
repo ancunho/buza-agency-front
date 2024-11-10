@@ -1,4 +1,9 @@
 export default {
+    common: {
+        confirm: '확인',
+        cancel: '취소',
+        error: '오류가 발생했습니다.'
+    },
     toast: {
         success: {
             addToCart: '장바구니에 추가되었습니다.',
@@ -42,6 +47,7 @@ export default {
         currency: '화폐',
         freeDelivery: '초과 주문',
         myPage: '마이페이지',
-        logout: '로그아웃'
+        logout: '로그아웃',
+        logoutConfirm: '정말 로그아웃 하시겠습니까?'
     }
 } 

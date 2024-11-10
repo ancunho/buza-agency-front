@@ -275,6 +275,7 @@ import { handleTree } from '@/util/util';
 import { useI18n } from 'vue-i18n';
 import { useToastStore } from '@/stores/toast';
 import { useAuthStore } from '@/stores/auth';
+import { useModalStore } from '@/stores/modal'
 
 
 import {
@@ -301,6 +302,9 @@ const { t } = useI18n();
 // toast store 사용
 const toastStore = useToastStore();
 
+// modal store 사용
+const modalStore = useModalStore();
+
 const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
 
 const currentLocale = ref(localStorage.getItem('locale') || 'ko');
@@ -323,13 +327,29 @@ const categoryTree = ref([]);
 
 const authStore = useAuthStore();
 
-const handleLogout = async () => {
+
+const handleLogout = () => {
+    modalStore.show({
+        title: t('header.logout'),
+        message: t('header.logoutConfirm'),
+        confirm: t('common.confirm'),
+        cancel: t('common.cancel')
+    }).then((result) => {
+        if (result) {
+            logout_process();
+        }
+    });
+}
+
+const logout_process = async () => {
     const res = await logout();
     console.log(res);
 
     if (res.code === 0) {
         authStore.logout();
         toastStore.showToast('success', t('toast.success.logout'), 1500);
+    } else {
+        toastStore.showToast('error', t('common.error'), 1500);
     }
 }
 

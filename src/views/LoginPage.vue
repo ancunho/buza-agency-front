@@ -62,62 +62,51 @@ import { ref } from 'vue';
 import { loginByEmail } from '@/api/member';
 import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/stores/toast';
+import { useRouter } from 'vue-router';
 import { isEmpty } from '@/util/util';
 import { useI18n } from 'vue-i18n';
 
-// i18n 사용
+const router = useRouter();
 const { t, locale } = useI18n();
-
-// 현재 선택된 언어
 const currentLocale = ref(locale.value);
+const authStore = useAuthStore();
+const toastStore = useToastStore();
 
-// 언어 변경 함수
+const email = ref('');
+const password = ref('');
+
 const changeLocale = () => {
     locale.value = currentLocale.value;
     localStorage.setItem('locale', currentLocale.value);
 };
 
-// 전역 상태 사용
-const authStore = useAuthStore();
-
-// 이메일 입력 변수
-const email = ref('');
-// 비밀번호 입력 변수
-const password = ref('');
-// toast store 사용
-const toastStore = useToastStore();
-
-/**
- * 로그인 함수
- */
 const login = () => {
-	var params = {		
-		email: email.value,
-		password: password.value
-	}
-	if (isEmpty(params.email)) {
-		toastStore.showToast('warn', t('toast.email.empty'), 2000);
-		return;
-	}
-	if (isEmpty(params.password)) {
-		toastStore.showToast('warn', t('toast.password.empty'), 2000);
-		return;
-	}
+    var params = {		
+        email: email.value,
+        password: password.value
+    }
+    if (isEmpty(params.email)) {
+        toastStore.showToast('warn', t('toast.email.empty'), 2000);
+        return;
+    }
+    if (isEmpty(params.password)) {
+        toastStore.showToast('warn', t('toast.password.empty'), 2000);
+        return;
+    }
 
-	loginByEmail(params)
-		.then(res => {
-			if (res.code === 0) {
-				authStore.setLoginState(res.data.accessToken);
-				
-				toastStore.showToast('success', t('toast.success.login'), 1500, () => {
-					window.location.href = '/';
-				});
-			} else {
-				toastStore.showToast('error', res.msg, 2000);
-				email.value = '';
-				password.value = '';
-			}
-		});
-	
+    loginByEmail(params)
+        .then(res => {
+            if (res.code === 0) {
+                authStore.setLoginState(res.data.accessToken);
+                
+                toastStore.showToast('success', t('toast.success.login'), 1000, () => {
+                    router.push('/');
+                });
+            } else {
+                toastStore.showToast('error', res.msg, 2000);
+                email.value = '';
+                password.value = '';
+            }
+        });
 }
 </script>
