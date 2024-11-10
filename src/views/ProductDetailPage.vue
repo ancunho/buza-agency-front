@@ -474,7 +474,7 @@ const addToCart = () => {
 	localStorage.setItem('cartItems', JSON.stringify(currentCart));
 
 	// toast 사용
-	toastStore.showToast('success', t('toast.success.addToCart'), 2000);
+	toastStore.showToast('success', t('toast.success.addToCart'), 1500);
 };
 
 // 영역별 로딩 상태 관리

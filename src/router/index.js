@@ -60,7 +60,10 @@ router.beforeEach((to, from, next) => {
         } else if (authStore.isLoggedIn) {
             next();
         } else {
-            next('/login');
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            });
         }
     } else {
         next();

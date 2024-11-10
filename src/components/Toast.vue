@@ -4,7 +4,7 @@
             <div v-for="toast in toasts" :key="toast.id"
                 class="mb-2 px-6 py-3 rounded-lg shadow-lg text-sm font-medium backdrop-blur-sm text-center min-w-[200px]"
                 :class="{
-                    'bg-gray-800 bg-opacity-90 text-black': toast.type === 'success',
+                    'bg-gray-800 bg-opacity-90 text-white': toast.type === 'success',
                     'bg-amber-500 bg-opacity-90 text-black': toast.type === 'warn',
                     'bg-rose-600 bg-opacity-90 text-white': toast.type === 'error',
                     'bg-gray-800 bg-opacity-90 text-black': !toast.type

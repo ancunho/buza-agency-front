@@ -50,7 +50,7 @@
                             </div>
                         </div>
 
-                        <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+                        <div v-if="!authStore.isLoggedIn"  class="space-y-6 border-t border-gray-200 px-4 py-6">
                             <div class="flow-root">
                                 <a href="#" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.createAccount') }}</a>
                             </div>
@@ -58,6 +58,33 @@
                                 <a href="/login" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.signIn') }}</a>
                             </div>
                         </div>
+
+                        <div v-else class="space-y-6 border-t border-gray-200 px-4 py-6">
+                            <div class="flow-root">
+                                <a href="/mypage" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.myPage') }}</a>
+                            </div>
+                            <div class="flow-root">
+                                <a @click="handleLogout" class="cursor-pointer -m-2 block p-2 font-medium text-gray-900">{{ t('header.logout') }}</a>
+                            </div>
+                        </div>
+
+                        <!-- 로그인 상태에 따른 버튼 표시 시작 -->
+                        <!-- <div v-if="!authStore.isLoggedIn" 
+                            class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6" >
+                            <a href="#" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.createAccount') }}</a>
+                            <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
+                            <a href="/login" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.signIn') }}</a>
+                        </div>
+
+                        <div v-else
+                            class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                            <a href="/mypage" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.myPage') }}</a>
+                            <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
+                            <a @click="handleLogout" class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">{{ t('header.logout') }}</a>
+                        </div> -->
+                        <!-- 로그인 상태에 따른 버튼 표시 끝 -->
+
+
 
                         <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                             <!-- Currency selector -->
@@ -273,10 +300,7 @@ import { getCategoryList } from '@/api/product';
 import { logout } from '@/api/member';
 import { handleTree } from '@/util/util';
 import { useI18n } from 'vue-i18n';
-import { useToastStore } from '@/stores/toast';
-import { useAuthStore } from '@/stores/auth';
-import { useModalStore } from '@/stores/modal'
-
+import { useRouter } from 'vue-router';
 
 import {
     Dialog,
@@ -295,22 +319,29 @@ import {
 } from '@headlessui/vue'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
+import { useToastStore } from '@/stores/toast';
+import { useModalStore } from '@/stores/modal';
+import { useAuthStore } from '@/stores/auth';
 
 // i18n 사용
 const { t } = useI18n();
 
 // toast store 사용
 const toastStore = useToastStore();
-
 // modal store 사용
 const modalStore = useModalStore();
+// auth store 사용
+const authStore = useAuthStore();
 
-const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
+// router 사용
+const router = useRouter();
 
 const currentLocale = ref(localStorage.getItem('locale') || 'ko');
 const changeLocale = () => {
     localStorage.setItem('locale', currentLocale.value);
-    location.reload();
+    //router 새로고침
+    router.go(0);
+
 }
 
 
@@ -325,12 +356,9 @@ const mobileMenuOpen = ref(false);
 
 const categoryTree = ref([]);
 
-const authStore = useAuthStore();
-
-
 const handleLogout = () => {
     modalStore.show({
-        title: t('header.logout'),
+        title: null,
         message: t('header.logoutConfirm'),
         confirm: t('common.confirm'),
         cancel: t('common.cancel')

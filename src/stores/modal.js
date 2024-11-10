@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue';
-import { useToastStore } from './toast';
 
 export const useModalStore = defineStore('modal', () => {
     const isOpen = ref(false)
@@ -53,7 +52,9 @@ export const useModalStore = defineStore('modal', () => {
         cancel,
         close
     }
-})
+});
+
+
 
 // 모달 컴포넌트에서 사용예시
 // import { useModalStore } from '@/stores/modal'
