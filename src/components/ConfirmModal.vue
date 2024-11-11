@@ -10,7 +10,7 @@
                 leave-from="opacity-100"
                 leave-to="opacity-0"
             >
-                <div class="fixed inset-0 bg-black bg-opacity-30"></div>
+                <div class="fixed inset-0"></div>
             </TransitionChild>
 
             <div class="fixed inset-0">
@@ -24,11 +24,11 @@
                         leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95"
                     >
-                        <DialogPanel class="relative w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
+                        <DialogPanel class="relative w-full max-w-md transform overflow-hidden rounded shadow-2xl bg-white border border-gray-200 p-6 text-left align-middle transition-all">
                             <!-- Close button -->
                             <button 
                                 @click="closeModal"
-                                class="absolute top-2 right-2 text-gray-400 hover:text-gray-500 focus:outline-none"
+                                class="absolute top-2 right-2 text-gray-700 hover:text-gray-900 focus:outline-none"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" />
@@ -54,7 +54,7 @@
                                 </button>
                                 <button
                                     type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-gray-900 px-6 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:transition-colors duration-500 focus:outline-none"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-gray-900 px-6 py-2 text-sm font-medium text-white hover:bg-gray-900 hover:transition-colors duration-500 focus:outline-none"
                                     @click="onConfirm"
                                 >
                                     {{ confirmText }}

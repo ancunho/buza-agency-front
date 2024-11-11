@@ -2,7 +2,10 @@ export default {
     common: {
         confirm: '确认',
         cancel: '取消',
-        error: '发生错误'
+        error: '发生错误',
+        search: '搜索',
+        account: '我的主页',
+        cart: '购物车'
     },
     toast: {
         success: {

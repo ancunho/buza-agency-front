@@ -2,7 +2,10 @@ export default {
     common: {
         confirm: 'Confirm',
         cancel: 'Cancel',
-        error: 'An error occurred'
+        error: 'An error occurred',
+        search: 'Search',
+        account: 'Account',
+        cart: 'Cart'
     },
     toast: {
         success: {

@@ -2,7 +2,10 @@ export default {
     common: {
         confirm: '확인',
         cancel: '취소',
-        error: '오류가 발생했습니다.'
+        error: '오류가 발생했습니다.',
+        search: '검색',
+        account: '마이페이지',
+        cart: '장바구니'
     },
     toast: {
         success: {

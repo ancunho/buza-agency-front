@@ -68,24 +68,6 @@
                             </div>
                         </div>
 
-                        <!-- 로그인 상태에 따른 버튼 표시 시작 -->
-                        <!-- <div v-if="!authStore.isLoggedIn" 
-                            class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6" >
-                            <a href="#" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.createAccount') }}</a>
-                            <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                            <a href="/login" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.signIn') }}</a>
-                        </div>
-
-                        <div v-else
-                            class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                            <a href="/mypage" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.myPage') }}</a>
-                            <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                            <a @click="handleLogout" class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">{{ t('header.logout') }}</a>
-                        </div> -->
-                        <!-- 로그인 상태에 따른 버튼 표시 끝 -->
-
-
-
                         <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                             <!-- Currency selector -->
                             <form>
@@ -147,6 +129,7 @@
                     <!-- 로그인 상태에 따른 버튼 표시 시작 -->
                     <div v-if="!authStore.isLoggedIn" 
                         class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6" >
+                        
                         <a href="#" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.createAccount') }}</a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
                         <a href="/login" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.signIn') }}</a>
@@ -154,9 +137,15 @@
 
                     <div v-else
                         class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                        <a href="/mypage" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.myPage') }}</a>
+                        <a href="/mypage" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
+                            <UserIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.myPage') }}</span>
+                        </a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                        <a @click="handleLogout" class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">{{ t('header.logout') }}</a>
+                        <a @click="handleLogout" class="flex items-center cursor-pointer text-sm font-medium text-white hover:text-gray-100">
+                            <ArrowRightStartOnRectangleIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.logout') }}</span>
+                        </a>
                     </div>
                     <!-- 로그인 상태에 따른 버튼 표시 끝 -->
                 </div>
@@ -258,16 +247,9 @@
                                 <div class="flex items-center lg:ml-8">
                                     <div class="flex space-x-8">
                                         <div class="hidden lg:flex">
-                                            <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                                                <span class="sr-only">Search</span>
-                                                <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
-                                            </a>
-                                        </div>
-
-                                        <div class="flex">
-                                            <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                                                <span class="sr-only">Account</span>
-                                                <UserIcon class="h-6 w-6" aria-hidden="true" />
+                                            <a href="#" class="-m-2 p-2 text-gray-700 hover:text-gray-900 flex items-center">
+                                                <MagnifyingGlassIcon class="h-4 w-4" aria-hidden="true" />
+                                                <span class="text-sm ml-1">{{ t('common.search') }}</span>
                                             </a>
                                         </div>
                                     </div>
@@ -277,10 +259,10 @@
                                     <div class="flow-root">
                                         <a href="#" class="group -m-2 flex items-center p-2">
                                             <ShoppingCartIcon
-                                                class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                class="h-4 w-4 flex-shrink-0 text-gray-700 group-hover:text-gray-900"
                                                 aria-hidden="true" />
-                                            <span
-                                                class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                            <span class="text-sm ml-1">{{ t('common.cart') }}</span>
+                                            <span class="ml-2 text-sm font-bold underline underline-offset-4 text-gray-700 group-hover:text-gray-900">0</span>
                                             <span class="sr-only">items in cart, view bag</span>
                                         </a>
                                     </div>
@@ -315,9 +297,9 @@ import {
     TabPanel,
     TabPanels,
     TransitionChild,
-    TransitionRoot,
+    TransitionRoot
 } from '@headlessui/vue'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon, ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { useToastStore } from '@/stores/toast';
 import { useModalStore } from '@/stores/modal';
