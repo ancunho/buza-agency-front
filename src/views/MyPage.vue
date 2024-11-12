@@ -1,8 +1,24 @@
 <template>
 	<main class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+
 		<div class="flex flex-col lg:flex-row gap-x-8">
 			<!-- PC 버전 사이드바 -->
 			<div class="hidden lg:block w-64 shrink-0">
+				<!-- 사이드바 타이틀 시작 -->
+				<div class="mb-4 text-md pb-2"> 
+					<!-- 프로필 정보 시작 -->
+					<div class="flex items-center gap-x-3">
+						<img src="@/assets/images/logo.png" alt="프로필 이미지" class="w-16 h-16 rounded">
+						<div class="text-xs">
+							<div class="text-gray-900 font-semibold">홍길동</div>
+							<div class="text-gray-500">hong@example.com</div>
+						</div>
+					</div>
+					<!-- 프로필 정보 끝 -->
+				</div>
+				<!-- 사이드바 타이틀 끝 -->
+
+				<!-- 사이드바 네비게이션 시작 -->
 				<nav class="flex flex-1 flex-col" aria-label="Sidebar">
 					<ul role="list" class="-mx-2 space-y-1">
 						<li v-for="item in navigation" :key="item.name">
@@ -18,6 +34,7 @@
 						</li>
 					</ul>
 				</nav>
+				<!-- 사이드바 네비게이션 끝 -->
 			</div>
 
 			<!-- 모바일 버전 드롭다운 메뉴 -->
@@ -74,8 +91,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { CalendarIcon, ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } from '@heroicons/vue/24/outline';
-import { useRoute, useRouter } from 'vue-router';
-import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { ref, watch, onMounted } from 'vue';
+import { getMemberInfo } from '@/api/member';
 
 const route = useRoute();
 const navigation = ref([
@@ -116,6 +134,23 @@ const navigation = ref([
 		current: route.path === '/mypage/member-info' 
 	},
 ]);
+
+const memberInfo = ref({
+	email: '',
+	nickname: '',
+	profileImageUrl: '',
+	phoneNumber: '',
+	birthday: '',
+	gender: '',
+	createdAt: '',
+});
+
+onMounted(() => {
+	const res = getMemberInfo();
+	console.log(res);
+
+	memberInfo.value = res.data;
+});
 
 const title = ref('');
 

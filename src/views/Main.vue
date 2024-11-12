@@ -51,7 +51,6 @@ const loadProducts = () => {
         pageNo: pageNo.value,
         pageSize: pageSize.value
     }).then(res => {
-        console.log(res);
         if (res.data.code !== 0) {
             toastStore.showToast('error', res.data.msg, 2000);
             return;

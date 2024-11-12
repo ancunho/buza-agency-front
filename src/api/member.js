@@ -1,5 +1,10 @@
 import request from '@/util/request';
 
+/**
+ * 이메일 로그인
+ * @param {Object} params 
+ * @returns 
+ */
 export const loginByEmail = async (params) => {
     const response = await request({
         url: '/member/auth/login-by-email',
@@ -13,6 +18,21 @@ export const loginByEmail = async (params) => {
     return response.data;
 }
 
+/**
+ * Refresh Token
+ */
+export const refreshToken = async () => {
+    const response = await request({
+        url: '/member/auth/refresh-token',
+        method: 'post',
+    });
+    return response.data;
+}
+
+/**
+ * 로그아웃
+ * @returns 
+ */
 export const logout = async () => {
     const response = await request({
         url: '/member/auth/logout',
@@ -25,6 +45,10 @@ export const logout = async () => {
     return response.data;
 }
 
+/**
+ * 회원 정보 조회
+ * @returns 
+ */
 export const getMemberInfo = async () => {
     const response = await request({
         url: '/member/user/get',

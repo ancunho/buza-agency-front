@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="mt-4 flex justify-center space-x-3">
-                                <button
+                                <button v-if="cancelText"
                                     type="button"
                                     class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-6 py-2 text-sm hover:transition-colors duration-500 font-medium text-gray-900 hover:bg-gray-200 focus:outline-none"
                                     @click="onCancel"

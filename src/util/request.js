@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useModalStore } from '@/stores/modal';
+const router = useRouter();
 
 const getAuthToken = () => {
     const token = localStorage.getItem('accessToken');
@@ -31,14 +34,27 @@ request.interceptors.request.use(
 );
 
 request.interceptors.response.use(
-    response => response,
+    (response) => {
+        if (response.data.code === 401) {
+            const modalStore = useModalStore();
+            modalStore.show({
+                title: '로그인',
+                message: '로그인이 필요합니다.',
+                confirmText: '로그인하러 가기'
+            }).then((confirmed) => {
+                if (confirmed) {
+                    router.push('/login');
+                }
+            });
+        }
+        return response;
+    },
     error => {
         // 네트워크 에러 처리
         if (error.code === 'ERR_NETWORK') {
             if (showToast) {
                 showToast('서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.', 2000);
             }
-            console.error('Network Error:', error);
             return Promise.reject(error);
         }
 

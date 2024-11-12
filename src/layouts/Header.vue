@@ -353,11 +353,12 @@ const handleLogout = () => {
 
 const logout_process = async () => {
     const res = await logout();
-    console.log(res);
 
     if (res.code === 0) {
         authStore.logout();
-        toastStore.showToast('success', t('toast.success.logout'), 1500);
+        toastStore.showToast('success', t('toast.success.logout'), 500, () => {
+            router.push('/');
+        });
     } else {
         toastStore.showToast('error', t('common.error'), 1500);
     }

@@ -98,8 +98,8 @@ const login = () => {
     loginByEmail(params)
         .then(res => {
             if (res.code === 0) {
-                authStore.setLoginState(res.data.accessToken);
-                
+                authStore.setLoginState(res.data.accessToken, res.data.refreshToken);
+				
                 toastStore.showToast('success', t('toast.success.login'), 1000, () => {
                     const redirectUrl = route.query.redirect || '/';
                     router.push(redirectUrl);
