@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { useRouter, useRoute } from 'vue-router';
-import { useModalStore } from '@/stores/modal';
-const router = useRouter();
-const route = useRoute();
+import { useAuthStore } from '@/stores/auth';
+import { getRefreshTokenApi } from '@/api/member';
 
 const getAuthToken = () => {
     const token = localStorage.getItem('accessToken');
@@ -36,16 +34,14 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
     (response) => {
-        if (response.data.code === 401) {
-            const modalStore = useModalStore();
-            modalStore.show({
-                title: '로그인',
-                message: '로그인이 필요합니다.',
-                confirmText: '로그인하러 가기'
-            }, () => {
-                router.push('/login');
-            });
+        if (response.config.url.indexOf('/member/auth') >= 0 && response.data?.data?.accessToken) {
+            const authStore = useAuthStore();
+            authStore.setLoginState(response.data.data.accessToken, response.data.data.refreshToken);
         }
+        if (response.data.code === 401) {
+            return setRefreshToken(response.config);
+        }
+
         return response;
     },
     error => {
@@ -69,6 +65,7 @@ request.interceptors.response.use(
                     showToast('접근 권한이 없습니다.', 2000);
                 }
             } else {
+                console.log(1111111111111);
                 if (showToast) {
                     showToast(error.response.data?.message || '오류가 발생했습니다.', 2000);
                 }
@@ -78,5 +75,62 @@ request.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+let requestList = []; // 请求队列
+let isRefreshToken = false; // 是否正在刷新中
+const setRefreshToken = async (config) => {
+    if (config.url.indexOf('/member/auth/refresh-token') >= 0) {
+        return Promise.reject('error');
+    }
+
+    if (!isRefreshToken) {
+        isRefreshToken = true;
+        const refreshToken = getRefreshTokenApi();
+        if (!refreshToken) {
+            console.log('refreshToken is null');
+            return Promise.reject('error');
+        }
+
+        try {
+            const refreshTokenResult = await refreshToken();
+            if (refreshTokenResult.code !== 200) {
+                throw new Error('refreshToken error');
+            }
+
+            config.headers['Authorization'] = 'Bearer ' + getAccessToken();
+            requestList.forEach((cb) => {
+                cb();
+            });
+            requestList = [];
+            return request(config);
+        } catch(error) {
+            console.log(error);
+        } finally { 
+            isRefreshToken = false;
+            requestList = [];
+        }
+
+
+        
+    } else {
+        requestList.forEach((cb) => {
+            cb();
+        });
+        const userStore = useAuthStore();
+        userStore.logout();
+
+    }
+};
+
+const getRefreshToken = () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return refreshToken;
+};
+
+const getAccessToken = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    return accessToken;
+};
+
 
 export default request;

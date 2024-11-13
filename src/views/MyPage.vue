@@ -8,10 +8,10 @@
 				<div class="mb-4 text-md pb-2"> 
 					<!-- 프로필 정보 시작 -->
 					<div class="flex items-center gap-x-3">
-						<img src="@/assets/images/logo.png" alt="프로필 이미지" class="w-16 h-16 rounded">
+						<img :src="memberInfo.avatar" alt="프로필 이미지" class="w-16 h-16 rounded">
 						<div class="text-xs">
-							<div class="text-gray-900 font-semibold">홍길동</div>
-							<div class="text-gray-500">hong@example.com</div>
+							<div class="text-gray-900 font-semibold">{{ memberInfo.nickname }}</div>
+							<div class="text-gray-500">{{ memberInfo.email }}</div>
 						</div>
 					</div>
 					<!-- 프로필 정보 끝 -->
@@ -91,10 +91,15 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { CalendarIcon, ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon } from '@heroicons/vue/24/outline';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
 import { getMemberInfo } from '@/api/member';
+import { useModalStore } from '@/stores/modal';
+import { useAuthStore } from '@/stores/auth';
 
+const authStore = useAuthStore();
+
+const router = useRouter();
 const route = useRoute();
 const navigation = ref([
 	{ 
@@ -146,10 +151,15 @@ const memberInfo = ref({
 });
 
 onMounted(() => {
-	const res = getMemberInfo();
-	console.log(res);
+	getMemberInfo()
+		.then(res => {
+			memberInfo.value = res.data.data;
+			if (res.data.code === 401) {
+				authStore.logout();
+				router.push('/login');
+			}
+		});
 
-	memberInfo.value = res.data;
 });
 
 const title = ref('');

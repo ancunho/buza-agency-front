@@ -1,4 +1,3 @@
-import { refreshToken } from '@/api/member';
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {

@@ -2,43 +2,43 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue';
 
 export const useModalStore = defineStore('modal', () => {
-    const isOpen = ref(false)
-    const title = ref('')
-    const message = ref('')
-    const confirmText = ref('확인')
-    const cancelText = ref('취소')
-    let resolvePromise = null
+    const isOpen = ref(false);
+    const title = ref('');
+    const message = ref('');
+    const confirmText = ref('확인');
+    const cancelText = ref('취소');
+    let resolvePromise = null;
 
     const show = ({ title: titleText, message: messageText, confirmText: confirmTextText, cancelText: cancelTextText }) => {
-        title.value = titleText
-        message.value = messageText
-        confirmText.value = confirmTextText || '확인'
-        cancelText.value = cancelTextText || '취소'
-        isOpen.value = true
+        title.value = titleText;
+        message.value = messageText;
+        confirmText.value = confirmTextText || '확인';
+        cancelText.value = cancelTextText;
+        isOpen.value = true;
 
         return new Promise((resolve) => {
-            resolvePromise = resolve
+            resolvePromise = resolve;
         })
     }
 
     const confirm = () => {
-        isOpen.value = false
+        isOpen.value = false;
         if (resolvePromise) {
-            resolvePromise(true)
-            resolvePromise = null
+            resolvePromise(true);
+            resolvePromise = null;
         }
     }
 
     const cancel = () => {
         isOpen.value = false
         if (resolvePromise) {
-            resolvePromise(false)
-            resolvePromise = null
+            resolvePromise(false);
+            resolvePromise = null;
         }
     }
 
     const close = () => {
-        cancel()
+        cancel();
     }
 
     return {

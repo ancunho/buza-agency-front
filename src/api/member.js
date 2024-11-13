@@ -21,7 +21,7 @@ export const loginByEmail = async (params) => {
 /**
  * Refresh Token
  */
-export const refreshToken = async () => {
+export const getRefreshTokenApi = async () => {
     const response = await request({
         url: '/member/auth/refresh-token',
         method: 'post',
@@ -59,4 +59,22 @@ export const getMemberInfo = async () => {
         },
     });
     return response;
+}
+
+/**
+ * 회원 정보 수정   
+ * @param {Object} params 
+ * @returns 
+ */
+export const updateMemberInfo = async (params) => {
+    const response = await request({
+        url: '/member/user/update',
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'tenant-id': '1',
+        },
+        data: params
+    });
+    return response.data;
 }

@@ -12,7 +12,7 @@ import MemberInfo from '@/views/mypage/MemberInfo.vue';
 import ProductDetailPage from '@/views/ProductDetailPage.vue';
 import NotFound from '@/views/NotFound.vue';
 import { useAuthStore } from '@/stores/auth';
-
+import { useModalStore } from '@/stores/modal';
 const routes = [
     {
         path: '/',
@@ -36,36 +36,57 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        redirect: '/mypage/order-list'
+                        redirect: '/mypage/order-list',
+                        meta: {
+                            requiresAuth: true
+                        }
                     },
                     {
                         path: 'order-list',
                         name: 'OrderList',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: OrderList
                     },
                     {
                         path: 'cancel-exchange-request',
                         name: 'CancelExchangeRequest',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: CancelExchangeRequest
                     },
                     {
                         path: 'coupon-list',
                         name: 'CouponList',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: CouponList
                     },
                     {
                         path: 'wishlist',
                         name: 'WishList',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: WishList
                     },
                     {
                         path: 'delivery-address',
                         name: 'DeliveryAddress',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: DeliveryAddress
                     },
                     {
                         path: 'member-info',
                         name: 'MemberInfo',
+                        meta: {
+                            requiresAuth: true
+                        },
                         component: MemberInfo
                     },
                 ]
@@ -108,16 +129,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
+    const modalStore = useModalStore();
+    console.log(11111);
+    console.log(authStore.isLoggedIn);
+    console.log(11111);
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (to.path === '/login') {
+            console.log("to.path === '/login'");
             next();
         } else if (authStore.isLoggedIn) {
             next();
         } else {
-            next({
-                path: '/login',
-                query: { redirect: to.fullPath }
-            });
+            alert('로그인이 필요합니다.');
+            authStore.logout();
+            window.location.href = '/login';
         }
     } else {
         next();
