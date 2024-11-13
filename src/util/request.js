@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useModalStore } from '@/stores/modal';
 const router = useRouter();
+const route = useRoute();
 
 const getAuthToken = () => {
     const token = localStorage.getItem('accessToken');
@@ -41,10 +42,8 @@ request.interceptors.response.use(
                 title: '로그인',
                 message: '로그인이 필요합니다.',
                 confirmText: '로그인하러 가기'
-            }).then((confirmed) => {
-                if (confirmed) {
-                    router.push('/login');
-                }
+            }, () => {
+                router.push('/login');
             });
         }
         return response;

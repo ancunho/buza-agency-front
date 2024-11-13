@@ -9,11 +9,11 @@ export const useModalStore = defineStore('modal', () => {
     const cancelText = ref('취소')
     let resolvePromise = null
 
-    const show = ({ title: titleText, message: messageText, confirm = '확인', cancel = '취소' }) => {
+    const show = ({ title: titleText, message: messageText, confirmText: confirmTextText, cancelText: cancelTextText }) => {
         title.value = titleText
         message.value = messageText
-        confirmText.value = confirm
-        cancelText.value = cancel
+        confirmText.value = confirmTextText || '확인'
+        cancelText.value = cancelTextText || '취소'
         isOpen.value = true
 
         return new Promise((resolve) => {

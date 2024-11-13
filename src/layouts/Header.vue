@@ -342,8 +342,8 @@ const handleLogout = () => {
     modalStore.show({
         title: null,
         message: t('header.logoutConfirm'),
-        confirm: t('common.confirm'),
-        cancel: t('common.cancel')
+        confirmText: t('common.confirm'),
+        cancelText: t('common.cancel')
     }).then((result) => {
         if (result) {
             logout_process();

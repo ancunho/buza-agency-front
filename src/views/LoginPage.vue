@@ -73,8 +73,8 @@ const currentLocale = ref(locale.value);
 const authStore = useAuthStore();
 const toastStore = useToastStore();
 
-const email = ref('');
-const password = ref('');
+const email = ref('ancunho3@naver.com');
+const password = ref('111111');
 
 const changeLocale = () => {
     locale.value = currentLocale.value;
@@ -99,7 +99,7 @@ const login = () => {
         .then(res => {
             if (res.code === 0) {
                 authStore.setLoginState(res.data.accessToken, res.data.refreshToken);
-				
+
                 toastStore.showToast('success', t('toast.success.login'), 1000, () => {
                     const redirectUrl = route.query.redirect || '/';
                     router.push(redirectUrl);
