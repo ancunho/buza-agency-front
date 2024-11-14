@@ -21,10 +21,14 @@ export const loginByEmail = async (params) => {
 /**
  * Refresh Token
  */
-export const getRefreshTokenApi = async () => {
+export const getRefreshTokenApi = async (refreshToken) => {
     const response = await request({
-        url: '/member/auth/refresh-token',
+        url: `/member/auth/refresh-token?refreshToken=${refreshToken}`,
         method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'tenant-id': '1',
+        }
     });
     return response.data;
 }

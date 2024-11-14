@@ -65,7 +65,6 @@ request.interceptors.response.use(
                     showToast('접근 권한이 없습니다.', 2000);
                 }
             } else {
-                console.log(1111111111111);
                 if (showToast) {
                     showToast(error.response.data?.message || '오류가 발생했습니다.', 2000);
                 }
@@ -79,20 +78,22 @@ request.interceptors.response.use(
 let requestList = []; // 请求队列
 let isRefreshToken = false; // 是否正在刷新中
 const setRefreshToken = async (config) => {
+    console.log('setRefreshToken 진입');
     if (config.url.indexOf('/member/auth/refresh-token') >= 0) {
         return Promise.reject('error');
     }
 
     if (!isRefreshToken) {
         isRefreshToken = true;
-        const refreshToken = getRefreshTokenApi();
+        const refreshToken = getRefreshToken();
         if (!refreshToken) {
             console.log('refreshToken is null');
             return Promise.reject('error');
         }
 
         try {
-            const refreshTokenResult = await refreshToken();
+            const refreshTokenResult = await getRefreshTokenApi(refreshToken);
+            console.log(refreshTokenResult);
             if (refreshTokenResult.code !== 200) {
                 throw new Error('refreshToken error');
             }

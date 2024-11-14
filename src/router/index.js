@@ -129,13 +129,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
-    const modalStore = useModalStore();
-    console.log(11111);
-    console.log(authStore.isLoggedIn);
-    console.log(11111);
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (to.path === '/login') {
-            console.log("to.path === '/login'");
             next();
         } else if (authStore.isLoggedIn) {
             next();

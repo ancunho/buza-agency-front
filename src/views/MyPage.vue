@@ -94,7 +94,6 @@ import { CalendarIcon, ChartPieIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted } from 'vue';
 import { getMemberInfo } from '@/api/member';
-import { useModalStore } from '@/stores/modal';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -153,10 +152,11 @@ const memberInfo = ref({
 onMounted(() => {
 	getMemberInfo()
 		.then(res => {
-			memberInfo.value = res.data.data;
 			if (res.data.code === 401) {
 				authStore.logout();
 				router.push('/login');
+			} else {
+				memberInfo.value = res.data.data;
 			}
 		});
 
