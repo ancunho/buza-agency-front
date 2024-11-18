@@ -51,6 +51,7 @@ export default {
         freeDelivery: 'orders over',
         myPage: 'My Page',
         logout: 'Logout',
+        cart: 'Cart',
         logoutConfirm: 'Are you sure you want to logout?'
     }
 } 

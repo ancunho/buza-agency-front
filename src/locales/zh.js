@@ -51,6 +51,7 @@ export default {
         freeDelivery: '超过',
         myPage: '我的页面',
         logout: '登出',
-        logoutConfirm: '确定要登出吗？'
+        logoutConfirm: '确定要登出吗？',
+        cart: '购物车'
     }
 } 

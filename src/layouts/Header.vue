@@ -127,24 +127,33 @@
                     <!-- 광고배너 끝 -->
 
                     <!-- 로그인 상태에 따른 버튼 표시 시작 -->
-                    <div v-if="!authStore.isLoggedIn" 
-                        class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6" >
-                        
-                        <a href="#" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.createAccount') }}</a>
+                    <div v-if="!authStore.isLoggedIn"  class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6" >
+                        <a href="#" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
+                            <UserIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.createAccount') }}</span>
+                        </a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                        <a href="/login" class="text-sm font-medium text-white hover:text-gray-100">{{ t('header.signIn') }}</a>
+                        <a href="/login" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
+                            <ArrowRightStartOnRectangleIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.signIn') }}</span>
+                        </a>
                     </div>
 
-                    <div v-else
-                        class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                    <div v-else class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                        <a @click="handleLogout" class="flex items-center cursor-pointer text-sm font-medium text-white hover:text-gray-100">
+                            <ArrowRightStartOnRectangleIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.logout') }}</span>
+                        </a>
+                        <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
                         <a href="/mypage" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
                             <UserIcon class="h-4 w-4" aria-hidden="true" />
                             <span class="ml-1">{{ t('header.myPage') }}</span>
                         </a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                        <a @click="handleLogout" class="flex items-center cursor-pointer text-sm font-medium text-white hover:text-gray-100">
-                            <ArrowRightStartOnRectangleIcon class="h-4 w-4" aria-hidden="true" />
-                            <span class="ml-1">{{ t('header.logout') }}</span>
+                        <a @click="handleToCart" class="flex items-center cursor-pointer text-sm font-medium text-white hover:text-gray-100">
+                            <ShoppingBagIcon class="h-4 w-4" aria-hidden="true" />
+                            <span class="ml-1">{{ t('header.cart') }}</span>
+                            <span class="w-8 h-8 ml-2 text-sm font-bold rounded-full bg-gray-700 flex items-center justify-center">{{ cartStore.totalCount }}</span>
                         </a>
                     </div>
                     <!-- 로그인 상태에 따른 버튼 표시 끝 -->
@@ -262,7 +271,7 @@
                                                 class="h-4 w-4 flex-shrink-0 text-gray-700 group-hover:text-gray-900"
                                                 aria-hidden="true" />
                                             <span class="text-sm ml-1">{{ t('common.cart') }}</span>
-                                            <span class="ml-2 text-sm font-bold underline underline-offset-4 text-gray-700 group-hover:text-gray-900">0</span>
+                                            <span class="ml-2 text-sm font-bold underline underline-offset-4 text-gray-700 group-hover:text-gray-900">{{ cartStore.totalCount }}</span>
                                             <span class="sr-only">items in cart, view bag</span>
                                         </a>
                                     </div>
@@ -284,27 +293,13 @@ import { handleTree } from '@/util/util';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import {
-    Dialog,
-    DialogPanel,
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-    Tab,
-    TabGroup,
-    TabList,
-    TabPanel,
-    TabPanels,
-    TransitionChild,
-    TransitionRoot
-} from '@headlessui/vue'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon, ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
+import { Dialog, DialogPanel, Popover, PopoverButton, PopoverGroup, PopoverPanel, Tab, TabGroup, TabList, TabPanel, TabPanels, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon, ArrowRightStartOnRectangleIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { useToastStore } from '@/stores/toast';
 import { useModalStore } from '@/stores/modal';
 import { useAuthStore } from '@/stores/auth';
-
+import { useCartStore } from '@/stores/cart';
 // i18n 사용
 const { t } = useI18n();
 
@@ -314,6 +309,8 @@ const toastStore = useToastStore();
 const modalStore = useModalStore();
 // auth store 사용
 const authStore = useAuthStore();
+// cart store 사용
+const cartStore = useCartStore();
 
 // router 사용
 const router = useRouter();
@@ -337,6 +334,12 @@ const navigation = {
 const mobileMenuOpen = ref(false);
 
 const categoryTree = ref([]);
+
+const handleToCart = () => {
+    router.push('/cart');
+}
+
+
 
 const handleLogout = () => {
     modalStore.show({

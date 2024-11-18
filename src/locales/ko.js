@@ -51,6 +51,7 @@ export default {
         freeDelivery: '초과 주문',
         myPage: '마이페이지',
         logout: '로그아웃',
-        logoutConfirm: '정말 로그아웃 하시겠습니까?'
+        logoutConfirm: '정말 로그아웃 하시겠습니까?',
+        cart: '장바구니'
     }
 } 

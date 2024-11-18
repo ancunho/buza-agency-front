@@ -180,24 +180,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import {
-	Disclosure,
-	DisclosureButton,
-	DisclosurePanel,
-	RadioGroup,
-	RadioGroupOption,
-	Tab,
-	TabGroup,
-	TabList,
-	TabPanel,
-	TabPanels,
-} from '@headlessui/vue'
-import { StarIcon } from '@heroicons/vue/20/solid'
+import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/vue';
 import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/vue/24/outline';
 import { getSpuDetail } from '@/api/product';
 import { useAuthStore } from '@/stores/auth';
+import { useCartStore } from '@/stores/cart';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { useToastStore } from '@/stores/toast';
 import { useI18n } from 'vue-i18n';	
@@ -218,6 +207,8 @@ const router = useRouter();
 
 // auth store 사용
 const authStore = useAuthStore();
+// cart store 사용
+const cartStore = useCartStore();
 
 // toast store 사용
 const toastStore = useToastStore();
@@ -426,7 +417,7 @@ const isValueDisabled = (propertyName, valueName) => {
  * 장바구니에 상품을 추가하는 함수
  * 로그인이 되어있지 않으면 로그인페이지로 유도함
  */
-const addToCart = () => {
+const addToCart = async () => {
 	// 로그인 여부 확인 (전역 상태 사용)
 	if (!authStore.isLoggedIn) {
 		if (window.confirm('로그인 페이지로 이동하시겠습니까?')) {
@@ -435,6 +426,20 @@ const addToCart = () => {
 		return;
 	}
 
+	var params = {
+		skuId: selectedSku.value.id,
+		count: quantity.value
+	}
+
+	const result = await cartStore.addToCart(params.skuId, params.count);
+
+	if (result) {
+		toastStore.showToast('success', t('toast.success.addToCart'), 1500);
+	} else {
+		toastStore.showToast('error', t('common.error'), 1500);
+	}
+
+	/*
 	// 장바구니에 추가할 상품 정보 구성
 	const cartItem = {
 		spuId: productItem.value.id,
@@ -475,6 +480,7 @@ const addToCart = () => {
 
 	// toast 사용
 	toastStore.showToast('success', t('toast.success.addToCart'), 1500);
+	*/
 };
 
 // 영역별 로딩 상태 관리

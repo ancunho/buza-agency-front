@@ -9,10 +9,11 @@ import CouponList from '@/views/mypage/CouponList.vue';
 import WishList from '@/views/mypage/WishList.vue';
 import DeliveryAddress from '@/views/mypage/DeliveryAddress.vue';
 import MemberInfo from '@/views/mypage/MemberInfo.vue';
-import ProductDetailPage from '@/views/ProductDetailPage.vue';
+import ProductDetailPage from '@/views/product/ProductDetailPage.vue';
 import NotFound from '@/views/NotFound.vue';
+import CartPage from '@/views/CartPage.vue';
 import { useAuthStore } from '@/stores/auth';
-import { useModalStore } from '@/stores/modal';
+
 const routes = [
     {
         path: '/',
@@ -90,6 +91,14 @@ const routes = [
                         component: MemberInfo
                     },
                 ]
+            },
+            {
+                path: '/cart',
+                name: 'Cart',
+                meta: {
+                    requiresAuth: true
+                },
+                component: CartPage
             },
             {
                 path: '/product/detail/:id',
