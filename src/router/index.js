@@ -1,7 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import HomePage from '@/views/Main.vue';
+
+import BlogLayout from '@/layouts/BlogLayout.vue';
+import BlogHome from '@/views/blog/index.vue';
+import BlogPostDetail from '@/views/blog/PostDetail.vue';
+
 import LoginPage from '@/views/LoginPage.vue';
+
+
+import StoreLayout from '@/layouts/StoreLayout.vue';
+import HomePage from '@/views/Main.vue';
 import MyPage from '@/views/MyPage.vue';
 import OrderList from '@/views/mypage/OrderList.vue';
 import CancelExchangeRequest from '@/views/mypage/CancelExchangeRequest.vue';
@@ -10,14 +17,35 @@ import WishList from '@/views/mypage/WishList.vue';
 import DeliveryAddress from '@/views/mypage/DeliveryAddress.vue';
 import MemberInfo from '@/views/mypage/MemberInfo.vue';
 import ProductDetailPage from '@/views/product/ProductDetailPage.vue';
+
 import NotFound from '@/views/NotFound.vue';
 import CartPage from '@/views/CartPage.vue';
+
 import { useAuthStore } from '@/stores/auth';
 
 const routes = [
     {
+        path: "/",
+        component: BlogLayout,
+        children: [
+            {
+                path: '',
+                name: 'BlogHome',
+                meta: {
+                    requiresAuth: false
+                },
+                component: BlogHome
+            },
+            {
+                path: '/blog/post/:id',
+                name: 'BlogPostDetail',
+                component: BlogPostDetail
+            }
+        ]
+    },
+    {
         path: '/store',
-        component: DefaultLayout,
+        component: StoreLayout,
         children: [
             {
                 path: '',
@@ -121,7 +149,7 @@ const routes = [
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: DefaultLayout,
+        component: StoreLayout,
         children: [
             {
                 path: '',

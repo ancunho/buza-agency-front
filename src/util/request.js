@@ -60,14 +60,17 @@ request.interceptors.response.use(
             if (status === 401) {
                 if (showToast) {
                     showToast('로그인이 필요합니다.', 2000);
+                    window.location.href = "/login";
                 }
             } else if (status === 403) {
                 if (showToast) {
                     showToast('접근 권한이 없습니다.', 2000);
+                    window.location.href = "/store";
                 }
             } else {
                 if (showToast) {
                     showToast(error.response.data?.message || '오류가 발생했습니다.', 2000);
+                    window.location.href = "/store";
                 }
             }
         }
