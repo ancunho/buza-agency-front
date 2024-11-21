@@ -9,6 +9,7 @@ const getAuthToken = () => {
 
 const request = axios.create({
     baseURL: 'http://localhost:48080/app-api',
+    // baseURL: 'https://api.buza.io/app-api',
     timeout: 5000
 });
 

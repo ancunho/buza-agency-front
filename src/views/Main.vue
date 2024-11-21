@@ -6,12 +6,12 @@
         <div v-else class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
 			<div v-for="product in productList" :key="product.id" class="group">
 				<div class="aspect-square w-full overflow-hidden">
-					<a :href="`/product/detail/${product.id}`">
+					<a :href="`/store/product/detail/${product.id}`">
 						<img :src="product.picUrl" :alt="product.name" class="h-full w-full object-contain group-hover:opacity-75" />
 					</a>
 				</div>
 				<h3 class="mt-4 text-sm text-gray-700">
-					<a :href="`/product/detail/${product.id}`" class="hover:underline">{{ product.name }}</a>
+					<a :href="`/store/product/detail/${product.id}`" class="hover:underline">{{ product.name }}</a>
 				</h3>
 				<p class="mt-1 text-lg font-medium text-gray-900">
                     <span class="text-red-500 text-sm pr-2">{{ calculateDiscountRate(product.marketPrice, product.price) }}<span style="font-size: 9px;">%</span>  </span>

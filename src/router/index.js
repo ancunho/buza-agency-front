@@ -16,7 +16,7 @@ import { useAuthStore } from '@/stores/auth';
 
 const routes = [
     {
-        path: '/',
+        path: '/store',
         component: DefaultLayout,
         children: [
             {
@@ -28,7 +28,7 @@ const routes = [
                 component: HomePage
             },
             {
-                path: '/mypage',
+                path: '/store/mypage',
                 name: 'MyPage',
                 meta: {
                     requiresAuth: true
@@ -37,13 +37,13 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        redirect: '/mypage/order-list',
+                        redirect: '/store/mypage/order-list',
                         meta: {
                             requiresAuth: true
                         }
                     },
                     {
-                        path: 'order-list',
+                        path: '/store/mypage/order-list',
                         name: 'OrderList',
                         meta: {
                             requiresAuth: true
@@ -51,7 +51,7 @@ const routes = [
                         component: OrderList
                     },
                     {
-                        path: 'cancel-exchange-request',
+                        path: '/store/mypage/cancel-exchange-request',
                         name: 'CancelExchangeRequest',
                         meta: {
                             requiresAuth: true
@@ -59,7 +59,7 @@ const routes = [
                         component: CancelExchangeRequest
                     },
                     {
-                        path: 'coupon-list',
+                        path: '/store/mypage/coupon-list',
                         name: 'CouponList',
                         meta: {
                             requiresAuth: true
@@ -67,7 +67,7 @@ const routes = [
                         component: CouponList
                     },
                     {
-                        path: 'wishlist',
+                        path: '/store/mypage/wishlist',
                         name: 'WishList',
                         meta: {
                             requiresAuth: true
@@ -75,7 +75,7 @@ const routes = [
                         component: WishList
                     },
                     {
-                        path: 'delivery-address',
+                        path: '/store/mypage/delivery-address',
                         name: 'DeliveryAddress',
                         meta: {
                             requiresAuth: true
@@ -83,7 +83,7 @@ const routes = [
                         component: DeliveryAddress
                     },
                     {
-                        path: 'member-info',
+                        path: '/store/mypage/member-info',
                         name: 'MemberInfo',
                         meta: {
                             requiresAuth: true
@@ -93,7 +93,7 @@ const routes = [
                 ]
             },
             {
-                path: '/cart',
+                path: '/store/cart',
                 name: 'Cart',
                 meta: {
                     requiresAuth: true
@@ -101,7 +101,7 @@ const routes = [
                 component: CartPage
             },
             {
-                path: '/product/detail/:id',
+                path: '/store/product/detail/:id',
                 name: 'ProductDetail',
                 meta: {
                     requiresAuth: false
@@ -111,7 +111,7 @@ const routes = [
         ]
     },
     {
-        path: '/login',
+        path: '/store/login',
         name: 'Login',
         meta: {
             requiresAuth: false

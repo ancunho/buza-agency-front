@@ -14,7 +14,7 @@
 		</div>
 
 		<div class="sm:mx-auto sm:w-full sm:max-w-sm">
-			<img class="mx-auto h-10 w-auto cursor-pointer" src="@/assets/images/logo.png" alt="Your Company" @click="router.push('/')" />
+			<img class="mx-auto h-10 w-auto cursor-pointer" src="@/assets/images/logo.png" alt="Your Company" @click="router.push('/store')" />
 		</div>
 
 		<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -103,7 +103,7 @@ const login = () => {
                 authStore.setLoginState(res.data.accessToken, res.data.refreshToken);
 
                 toastStore.showToast('success', t('toast.success.login'), 1000, () => {
-                    const redirectUrl = route.query.redirect || '/';
+                    const redirectUrl = route.query.redirect || '/store';
                     router.push(redirectUrl);
                 });
             } else {

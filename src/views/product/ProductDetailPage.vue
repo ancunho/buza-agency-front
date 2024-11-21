@@ -421,7 +421,7 @@ const addToCart = async () => {
 	// 로그인 여부 확인 (전역 상태 사용)
 	if (!authStore.isLoggedIn) {
 		if (window.confirm('로그인 페이지로 이동하시겠습니까?')) {
-			router.push('/login');
+			router.push('/store/login');
 		}
 		return;
 	}

@@ -26,7 +26,7 @@
 
                         <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                             <div v-for="category in categoryTree" :key="category.id" class="flow-root">
-                                <a :href="`/product/list/${category.id}`" class="-m-2 block p-2 font-medium text-gray-900">
+                                <a :href="`/store/product/list/${category.id}`" class="-m-2 block p-2 font-medium text-gray-900">
                                     {{ category.name }}
                                 </a>
                                 <div>
@@ -34,7 +34,7 @@
                                         class="mt-2 space-y-4">
                                         <li v-for="item in category.children" :key="item.name"
                                             class="inline-block">
-                                            <a :href="`/product/list/${item.id}`" class="inline-block mr-4 border border-gray-300 rounded-lg px-5 py-3 text-gray-800 transition-colors duration-300 ease-out hover:text-indigo-600 hover:bg-indigo-600 hover:text-white">
+                                            <a :href="`/store/product/list/${item.id}`" class="inline-block mr-4 border border-gray-300 rounded-lg px-5 py-3 text-gray-800 transition-colors duration-300 ease-out hover:text-indigo-600 hover:bg-indigo-600 hover:text-white">
                                                 {{ item.name }}
                                             </a>
                                         </li>
@@ -55,13 +55,13 @@
                                 <a href="#" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.createAccount') }}</a>
                             </div>
                             <div class="flow-root">
-                                <a href="/login" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.signIn') }}</a>
+                                <a href="/store/login" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.signIn') }}</a>
                             </div>
                         </div>
 
                         <div v-else class="space-y-6 border-t border-gray-200 px-4 py-6">
                             <div class="flow-root">
-                                <a href="/mypage" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.myPage') }}</a>
+                                <a href="/store/mypage" class="-m-2 block p-2 font-medium text-gray-900">{{ t('header.myPage') }}</a>
                             </div>
                             <div class="flow-root">
                                 <a @click="handleLogout" class="cursor-pointer -m-2 block p-2 font-medium text-gray-900">{{ t('header.logout') }}</a>
@@ -145,7 +145,7 @@
                             <span class="ml-1">{{ t('header.logout') }}</span>
                         </a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                        <a href="/mypage" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
+                        <a href="/store/mypage" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
                             <UserIcon class="h-4 w-4" aria-hidden="true" />
                             <span class="ml-1">{{ t('header.myPage') }}</span>
                         </a>
@@ -167,7 +167,7 @@
                         <div class="flex h-16 items-center justify-between">
                             <!-- Logo (lg+) -->
                             <div class="hidden lg:flex lg:items-center">
-                                <a href="/">
+                                <a href="/store">
                                     <span class="sr-only">{{ t('header.company') }}</span>
                                     <img class="h-8 w-auto"
                                         src="@/assets/images/logo.png"
@@ -207,7 +207,7 @@
                                                                             class="mt-2">
                                                                             <li v-for="item in category.children"
                                                                                 :key="item.name" class="inline-block mr-4">
-                                                                                <a :href="`/product/detail/${item.id}`"
+                                                                                <a :href="`/store/product/detail/${item.id}`"
                                                                                     class="border border-gray-300 rounded-lg px-5 py-3 text-gray-800 duration-300 transition-colors ease-in-out hover:text-black hover:border-black">
                                                                                     {{ item.name }}
                                                                                 </a>
@@ -246,7 +246,7 @@
                             </div>
 
                             <!-- Logo (lg-) -->
-                            <a href="#" class="lg:hidden">
+                            <a href="/store" class="lg:hidden">
                                 <span class="sr-only">Your Company</span>
                                 <img src="@/assets/images/logo.png"
                                     alt="" class="h-8 w-auto" />
@@ -336,7 +336,7 @@ const mobileMenuOpen = ref(false);
 const categoryTree = ref([]);
 
 const handleToCart = () => {
-    router.push('/cart');
+    router.push('/store/cart');
 }
 
 
@@ -360,7 +360,7 @@ const logout_process = async () => {
     if (res.code === 0) {
         authStore.logout();
         toastStore.showToast('success', t('toast.success.logout'), 500, () => {
-            router.push('/');
+            router.push('/store');
         });
     } else {
         toastStore.showToast('error', t('common.error'), 1500);

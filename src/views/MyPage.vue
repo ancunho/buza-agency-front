@@ -103,39 +103,39 @@ const route = useRoute();
 const navigation = ref([
 	{ 
 		name: '주문/배송 내역', 
-		path: '/mypage/order-list',
+		path: '/store/mypage/order-list',
 		icon: HomeIcon, 
-		current: route.path === '/mypage/order-list' 
+		current: route.path === '/store/mypage/order-list'
 	},
 	{ 
 		name: '취소/반품/교환 신청', 
-		path: '/mypage/cancel-exchange-request',
+		path: '/store/mypage/cancel-exchange-request',
 		icon: UsersIcon, 
-		current: route.path === '/mypage/cancel-exchange-request' 
+		current: route.path === '/store/mypage/cancel-exchange-request'
 	},
 	{ 
 		name: '쿠폰조회', 
-		path: '/mypage/coupon-list',
+		path: '/store/mypage/coupon-list',
 		icon: FolderIcon, 
-		current: route.path === '/mypage/coupon-list' 
+		current: route.path === '/store/mypage/coupon-list'
 	},
 	{ 
 		name: '위시리스트', 
-		path: '/mypage/wishlist',
+		path: '/store/mypage/wishlist',
 		icon: CalendarIcon, 
-		current: route.path === '/mypage/wishlist' 
+		current: route.path === '/store/mypage/wishlist'
 	},
 	{ 
 		name: '배송지 관리', 
-		path: '/mypage/delivery-address',
+		path: '/store/mypage/delivery-address',
 		icon: DocumentDuplicateIcon, 
-		current: route.path === '/mypage/delivery-address' 
+		current: route.path === '/store/mypage/delivery-address'
 	},
 	{ 
 		name: '회원정보', 
-		path: '/mypage/member-info',
+		path: '/store/mypage/member-info',
 		icon: ChartPieIcon, 
-		current: route.path === '/mypage/member-info' 
+		current: route.path === '/store/mypage/member-info'
 	},
 ]);
 
@@ -154,7 +154,7 @@ onMounted(() => {
 		.then(res => {
 			if (res.data.code === 401) {
 				authStore.logout();
-				router.push('/login');
+				router.push('/store/login');
 			} else {
 				memberInfo.value = res.data.data;
 			}
