@@ -58,10 +58,12 @@ request.interceptors.response.use(
         if (error.response) {
             const status = error.response.status;
             if (status === 401) {
+                const authStore = useAuthStore();
+                authStore.logout();
                 if (showToast) {
                     showToast('로그인이 필요합니다.', 2000);
-                    window.location.href = "/login";
                 }
+                window.location.href = "/store/login";
             } else if (status === 403) {
                 if (showToast) {
                     showToast('접근 권한이 없습니다.', 2000);
@@ -70,7 +72,6 @@ request.interceptors.response.use(
             } else {
                 if (showToast) {
                     showToast(error.response.data?.message || '오류가 발생했습니다.', 2000);
-                    window.location.href = "/store";
                 }
             }
         }
@@ -79,11 +80,13 @@ request.interceptors.response.use(
     }
 );
 
-let requestList = []; // 请求队列
+let requestList = []; // 요청队列
 let isRefreshToken = false; // 是否正在刷新中
 const setRefreshToken = async (config) => {
     console.log('setRefreshToken 진입');
     if (config.url.indexOf('/member/auth/refresh-token') >= 0) {
+        const authStore = useAuthStore();
+        authStore.logout();
         return Promise.reject('error');
     }
 
@@ -92,6 +95,12 @@ const setRefreshToken = async (config) => {
         const refreshToken = getRefreshToken();
         if (!refreshToken) {
             console.log('refreshToken is null');
+            const authStore = useAuthStore();
+            authStore.logout();
+            if (showToast) {
+                showToast('로그인이 만료되었습니다.', 2000);
+            }
+            window.location.href = "/store/login";
             return Promise.reject('error');
         }
 
@@ -99,32 +108,34 @@ const setRefreshToken = async (config) => {
             const refreshTokenResult = await getRefreshTokenApi(refreshToken);
             console.log(refreshTokenResult);
             if (refreshTokenResult.code !== 200) {
+                const authStore = useAuthStore();
+                authStore.logout();
+                if (showToast) {
+                    showToast('로그인이 만료되었습니다.', 2000);
+                }
+                window.location.href = "/store/login";
                 throw new Error('refreshToken error');
             }
 
             config.headers['Authorization'] = 'Bearer ' + getAccessToken();
-            requestList.forEach((cb) => {
-                cb();
-            });
+            requestList.forEach((cb) => cb());
             requestList = [];
             return request(config);
         } catch(error) {
             console.log(error);
+            const authStore = useAuthStore();
+            authStore.logout();
+            if (showToast) {
+                showToast('로그인이 만료되었습니다.', 2000);
+            }
+            window.location.href = "/store/login";
         } finally { 
             isRefreshToken = false;
             requestList = [];
         }
-
-
-        
-    } else {
-        requestList.forEach((cb) => {
-            cb();
-        });
-        const userStore = useAuthStore();
-        userStore.logout();
-
     }
+    
+    return Promise.reject('error');
 };
 
 const getRefreshToken = () => {

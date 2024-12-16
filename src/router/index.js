@@ -26,6 +26,10 @@ import { useAuthStore } from '@/stores/auth';
 const routes = [
     {
         path: "/",
+        redirect: '/store'
+    },
+    /*{
+        path: "/",
         component: BlogLayout,
         children: [
             {
@@ -42,7 +46,7 @@ const routes = [
                 component: BlogPostDetail
             }
         ]
-    },
+    },*/
     {
         path: '/store',
         component: StoreLayout,
@@ -167,14 +171,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (to.path === '/login') {
+        if (to.path === '/store/login') {
             next();
         } else if (authStore.isLoggedIn) {
             next();
         } else {
             alert('로그인이 필요합니다.');
             authStore.logout();
-            window.location.href = '/login';
+            window.location.href = '/store/login';
         }
     } else {
         next();

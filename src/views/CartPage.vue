@@ -1,8 +1,8 @@
 <template>
     <main class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-8 relative">
             <!-- 장바구니 상품 리스트 (3/4) -->
-            <div class="lg:w-3/4">
+            <div class="lg:w-3/4 relative">
                 <div class="bg-white shadow-sm rounded-lg">
                     <!-- 전체선택 헤더 -->
                     <div class="px-6 py-4 border-b border-gray-200">
@@ -58,7 +58,7 @@
                                     </div>
                                     <button
                                         type="button"
-                                        class="font-medium text-indigo-600 hover:text-indigo-500"
+                                        class="font-medium text-red-600 hover:text-red-500"
                                     >
                                         삭제
                                     </button>
@@ -71,7 +71,7 @@
 
             <!-- 정산 및 주문하기 (1/4) -->
             <div class="lg:w-1/4">
-                <div class="bg-white shadow-sm rounded-lg p-6">
+                <div class="sticky top-24 bg-white shadow-sm rounded-lg p-6">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">주문 요약</h2>
                     <div class="space-y-4">
                         <div class="flex justify-between">
@@ -159,6 +159,7 @@ onMounted(async () => {
         console.log(response);
         if (response.code === 0) {  
             cartList.value = response.data.validList;
+            cartList.value = [...cartList.value, ...response.data.invalidList];
         } else {
             toastStore.showToast('error', t('common.error'), 1500);
         }

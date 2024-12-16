@@ -133,7 +133,7 @@
                             <span class="ml-1">{{ t('header.createAccount') }}</span>
                         </a>
                         <span class="h-6 w-px bg-gray-600" aria-hidden="true" />
-                        <a href="/login" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
+                        <a href="/store/login" class="flex items-center text-sm font-medium text-white hover:text-gray-100">
                             <ArrowRightStartOnRectangleIcon class="h-4 w-4" aria-hidden="true" />
                             <span class="ml-1">{{ t('header.signIn') }}</span>
                         </a>
@@ -288,7 +288,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getCategoryList } from '@/api/product';
-import { logout } from '@/api/member';
+import { logout, getMemberInfo } from '@/api/member';
 import { handleTree } from '@/util/util';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -335,6 +335,8 @@ const mobileMenuOpen = ref(false);
 
 const categoryTree = ref([]);
 
+const memberInfo = ref({});
+
 const handleToCart = () => {
     router.push('/store/cart');
 }
@@ -372,6 +374,12 @@ onMounted(async () => {
     const res = await getCategoryList();
     const tree = handleTree(res.data.data);
     categoryTree.value = tree;
+
+    // getMemberInfo()
+    //     .then(res => { 
+    //         console.log(res);
+    //         memberInfo.value = res.data.data;
+    //     });
 
 })
 </script>
